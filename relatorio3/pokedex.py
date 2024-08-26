@@ -1,6 +1,8 @@
 from typing import Collection
 import pymongo
 from dataset import pokemon_dataset
+from main import db
+from WriteAJson import writeAJson
 
 
 class Database:
@@ -24,3 +26,23 @@ class Database:
             print("Banco de dados resetado com sucesso!")
         except Exception as e:
             print(e)
+
+#------------------------------------------------------------------------------------------primeiro comando
+def getPokemonByName(name: str):
+    return db.collection.find({"name": name})
+
+pikachu = getPokemonByName("Charmander")
+writeAJson(pikachu, "charmander")
+
+#------------------------------------------------------------------------------------------segundo comando
+tipos = ["Psychic"]
+pokemons = db.collection.find({ "type": {"$in": tipos}, "next_evolution": {"$exists": True} })
+
+#------------------------------------------------------------------------------------------terceiro comando
+pokemons = db.collection.find({"weaknesses": {"$size": 3}})
+
+#------------------------------------------------------------------------------------------quarto comando
+pokemons = db.collection.find({"num:" "150"})
+
+#------------------------------------------------------------------------------------------quinto comando
+pokemons = db.collection.find()
